@@ -5,6 +5,16 @@
   "repository": "https://github.com/diasjoaovitor/next-boilerplate.git",
   "author": "João Vitor <jvitordiass@outlook.com.br>",
   "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^14.2.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "devDependencies": {
     "git-commit-msg-linter": "^5.0.7"
   }
