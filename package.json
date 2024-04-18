@@ -1,0 +1,8 @@
+{
+  "name": "next-boilerplate",
+  "version": "1.0.0",
+  "description": "Next.js Boilerplate",
+  "repository": "https://github.com/diasjoaovitor/next-boilerplate.git",
+  "author": "João Vitor <jvitordiass@outlook.com.br>",
+  "license": "MIT"
+}
