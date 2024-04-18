@@ -8,7 +8,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint",
+    "lint:check": "prettier --check .",
+    "lint:fix": "prettier --write .",
+    "prepare": "husky"
   },
   "dependencies": {
     "next": "^14.2.2",
@@ -16,6 +20,12 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "git-commit-msg-linter": "^5.0.7"
+    "eslint": "^8",
+    "eslint-config-next": "^14.2.2",
+    "eslint-config-prettier": "^9.1.0",
+    "git-commit-msg-linter": "^5.0.7",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5"
   }
 }
