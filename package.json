@@ -4,5 +4,8 @@
   "description": "Next.js Boilerplate",
   "repository": "https://github.com/diasjoaovitor/next-boilerplate.git",
   "author": "João Vitor <jvitordiass@outlook.com.br>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "git-commit-msg-linter": "^5.0.7"
+  }
 }
