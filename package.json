@@ -14,7 +14,8 @@
     "lint:fix": "prettier --write .",
     "prepare": "husky",
     "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "test:ci": "jest --runInBand"
   },
   "dependencies": {
     "next": "^14.2.2",
