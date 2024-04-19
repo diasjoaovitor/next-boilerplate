@@ -17,3 +17,9 @@ Baseado no [boilerplate-apps-router](https://github.com/React-Avancado/boilerpla
 ## Passo a passo
 
 Escrevi [esse tutorial](https://www.tabnews.com.br/diasjoaovitor/tutorial-como-criar-um-boilerplate-para-projetos-com-next-js) incluindo todos os passos para a criação do boilerplate
+
+Caso queira utilizar esse boilerplate:
+
+```
+yarn create next-app -e https://github.com/diasjoaovitor/next-boilerplate
+```
