@@ -15,7 +15,8 @@
     "prepare": "husky",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "test:ci": "jest --runInBand"
+    "test:ci": "jest --runInBand",
+    "generate": "plop --plopfile generators/plopfile.js"
   },
   "dependencies": {
     "next": "^14.2.2",
@@ -38,6 +39,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^15.2.2",
+    "plop": "^4.0.1",
     "prettier": "^3.2.5",
     "typescript": "^5.4.5"
   }
