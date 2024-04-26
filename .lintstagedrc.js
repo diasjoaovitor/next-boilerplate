@@ -5,7 +5,7 @@ const buildEslintCommand = (filenames) => {
   return [
     `yarn prettier --write ${files.join(' --file ')}`,
     `next lint --fix --file ${files.join(' --file ')}`,
-    `yarn jest --findRelatedTests ${files} --passWithNoTests`
+    `yarn jest --findRelatedTests ${files.join(' ')} --passWithNoTests`
   ]
 }
 
