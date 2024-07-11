@@ -1,5 +1,7 @@
+import { MyComponent } from '@/app/components'
+
 const Home = () => {
-  return <h1>Home</h1>
+  return <MyComponent>Home</MyComponent>
 }
 
 export default Home

@@ -1,6 +1,6 @@
 const path = require('path')
 
-const buildEslintCommand = (filenames) => {
+const buildCommand = (filenames) => {
   const files = filenames.map((f) => path.relative(process.cwd(), f))
   return [
     `npx prettier --write ${files.join(' --file ')}`,
@@ -10,5 +10,5 @@ const buildEslintCommand = (filenames) => {
 }
 
 module.exports = {
-  '*.{js,jsx,ts,tsx}': [buildEslintCommand]
+  '*.{js,jsx,ts,tsx}': [buildCommand]
 }
