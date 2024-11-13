@@ -1,5 +1,5 @@
-import { PropsWithChildren } from 'react'
-
-export const MyComponent = ({ children }: PropsWithChildren) => {
-  return <div>{children}</div>
+export const MyComponent = () => {
+  return (
+    <div>MyComponent</div>
+  )
 }
