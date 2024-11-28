@@ -25,8 +25,7 @@ module.exports = (plop) => {
       {
         type: 'append',
         path: '../src/app/components/index.ts',
-        template: "export * from './{{pascalCase name}}'",
-        separator: ''
+        template: "export * from './{{pascalCase name}}'"
       },
       () => {
         const indexPath = path.resolve(
