@@ -1,4 +1,4 @@
-import { MyComponent } from '@/app/components'
+import { MyComponent } from '@/components'
 
 const Home = () => {
   return <MyComponent />

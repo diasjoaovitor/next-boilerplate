@@ -18,6 +18,7 @@ const eslintConfig = [
     plugins: ['simple-import-sort'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error'
     }
