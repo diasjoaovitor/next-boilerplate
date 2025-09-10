@@ -1,5 +1,5 @@
-import js from '@eslint/js'
 import { FlatCompat } from '@eslint/eslintrc'
+import js from '@eslint/js'
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -21,7 +21,8 @@ const eslintConfig = [
       '@typescript-eslint/no-require-imports': 'off',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error'
-    }
+    },
+    ignorePatterns: ['**/*.d.ts']
   })
 ]
 
