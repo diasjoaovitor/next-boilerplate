@@ -178,6 +178,6 @@ Escrevi [esse tutorial](https://www.tabnews.com.br/diasjoaovitor/tutorial-como-c
 
 Caso queira utilizar esse boilerplate:
 
-```
-npx create-next-app -e https://github.com/diasjoaovitor/next-boilerplate
+```sh
+pnpm create next-app -e https://github.com/diasjoaovitor/next-boilerplate
 ```
