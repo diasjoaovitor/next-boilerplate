@@ -1,1 +1,2 @@
-*.hbs
+generators/templates
+pnpm-lock.yaml
