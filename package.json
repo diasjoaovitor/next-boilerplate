@@ -5,6 +5,7 @@
   "repository": "https://github.com/diasjoaovitor/next-boilerplate.git",
   "author": "João Vitor <jvitordiass@outlook.com.br>",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
