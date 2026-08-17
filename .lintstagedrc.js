@@ -4,7 +4,7 @@ const buildCommand = (filenames) => {
   const files = filenames.map((f) => path.relative(process.cwd(), f))
   return [
     `npx prettier --write ${files.join(' --file ')}`,
-    `npx next lint --fix --file ${files.join(' --file ')}`,
+    `npx eslint --fix ${files.join(' ')}`,
     `npx jest --runInBand --findRelatedTests ${files.join(' ')} --passWithNoTests`
   ]
 }
