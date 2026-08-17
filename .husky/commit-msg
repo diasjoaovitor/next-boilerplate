@@ -19,4 +19,4 @@ msg=$(echo "$msg" | sed -e "s/^revert/🗑 revert/")
 
 echo "$msg" > "$1"
 
-npx commitlint --edit $1
+pnpm exec commitlint --edit $1
