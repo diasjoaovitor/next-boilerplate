@@ -1,14 +1,19 @@
 import path from 'node:path'
 
-const buildCommand = (filenames) => {
-  const files = filenames.map((file) => path.relative(process.cwd(), file))
-  return [
-    `pnpm exec prettier --write ${files.join(' ')}`,
-    `pnpm exec eslint --fix ${files.join(' ')}`,
-    `pnpm test --runInBand --findRelatedTests ${files.join(' ')} --passWithNoTests`
-  ]
-}
+const relativeFiles = (filenames) =>
+  filenames.map((file) => path.relative(process.cwd(), file)).join(' ')
+
+const prettier = (filenames) =>
+  `pnpm exec prettier --write ${relativeFiles(filenames)}`
+
+const eslint = (filenames) =>
+  `pnpm exec eslint --fix ${relativeFiles(filenames)}`
+
+const test = (filenames) =>
+  `pnpm test --runInBand --findRelatedTests ${relativeFiles(filenames)} --passWithNoTests`
 
 export default {
-  '*.{js,jsx,ts,tsx,mjs,cjs,json,md,yml,yaml}': [buildCommand]
+  '*.{js,jsx,ts,tsx,mjs,cjs}': [prettier, eslint, test],
+  '*.{json,md}': [prettier, eslint],
+  '*.{yml,yaml}': [prettier]
 }
