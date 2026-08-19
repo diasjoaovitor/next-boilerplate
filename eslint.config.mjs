@@ -1,10 +1,10 @@
 import json from '@eslint/json'
 import markdown from '@eslint/markdown'
+import vitest from '@vitest/eslint-plugin'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
 import prettier from 'eslint-config-prettier/flat'
-import pluginJest from 'eslint-plugin-jest'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import unicorn from 'eslint-plugin-unicorn'
 
@@ -35,18 +35,8 @@ const eslintConfig = defineConfig([
     }
   },
   {
-    files: ['**/*.spec.js', '**/*.test.js'],
-    plugins: { jest: pluginJest },
-    languageOptions: {
-      globals: pluginJest.environments.globals.globals
-    },
-    rules: {
-      'jest/no-disabled-tests': 'warn',
-      'jest/no-focused-tests': 'error',
-      'jest/no-identical-title': 'error',
-      'jest/prefer-to-have-length': 'warn',
-      'jest/valid-expect': 'error'
-    }
+    files: ['**/*.test.{js,jsx,ts,tsx}'],
+    ...vitest.configs.recommended
   },
   {
     files: ['**/*.json'],
