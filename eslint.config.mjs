@@ -17,7 +17,8 @@ const eslintConfig = defineConfig([
   {
     settings: {
       tailwindcss: {
-        cssConfigPath: './src/app/styles/globals.css'
+        cssConfigPath: './src/app/styles/globals.css',
+        parseKeyFunctions: ['classnames', 'classNames']
       }
     }
   },
@@ -26,7 +27,18 @@ const eslintConfig = defineConfig([
     plugins: {
       unicorn
     },
-    extends: ['unicorn/recommended']
+    extends: ['unicorn/recommended'],
+    rules: {
+      'unicorn/prevent-abbreviations': [
+        'error',
+        {
+          replacements: {
+            utils: false,
+            props: false
+          }
+        }
+      ]
+    }
   },
   {
     plugins: { 'simple-import-sort': simpleImportSort },
