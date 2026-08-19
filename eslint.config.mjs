@@ -6,19 +6,21 @@ import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
 import prettier from 'eslint-config-prettier/flat'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import eslintPluginTailwindcss from 'eslint-plugin-tailwindcss'
 import unicorn from 'eslint-plugin-unicorn'
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   prettier,
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    '.next/**',
-    'out/**',
-    'build/**',
-    'next-env.d.ts'
-  ]),
+  eslintPluginTailwindcss.configs.recommended,
+  {
+    settings: {
+      tailwindcss: {
+        cssConfigPath: './src/app/styles/globals.css'
+      }
+    }
+  },
   {
     files: ['**/*.{js,jsx,ts,tsx,mjs,cjs}'],
     plugins: {
@@ -49,7 +51,8 @@ const eslintConfig = defineConfig([
     plugins: { markdown },
     language: 'markdown/commonmark',
     extends: ['markdown/recommended']
-  }
+  },
+  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts'])
 ])
 
 export default eslintConfig
