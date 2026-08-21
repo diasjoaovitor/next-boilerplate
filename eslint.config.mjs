@@ -5,6 +5,8 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
 import prettier from 'eslint-config-prettier/flat'
+import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions'
+import pluginPromise from 'eslint-plugin-promise'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import eslintPluginTailwindcss from 'eslint-plugin-tailwindcss'
 import unicorn from 'eslint-plugin-unicorn'
@@ -12,8 +14,10 @@ import unicorn from 'eslint-plugin-unicorn'
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  pluginPromise.configs['flat/recommended'],
   prettier,
   eslintPluginTailwindcss.configs.recommended,
+  preferArrowFunctions.configs.all,
   {
     settings: {
       tailwindcss: {
@@ -23,7 +27,7 @@ const eslintConfig = defineConfig([
     }
   },
   {
-    files: ['**/*.{js,jsx,ts,tsx,mjs,cjs}'],
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     plugins: {
       unicorn
     },
