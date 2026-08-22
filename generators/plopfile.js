@@ -1,9 +1,12 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'node:fs'
+import path from 'node:path'
 
-const indexPath = path.resolve(__dirname, '../src/app/components/index.ts')
+const indexPath = path.resolve(
+  import.meta.dirname,
+  '../src/app/components/index.ts'
+)
 
-module.exports = (plop) => {
+const generator = (plop) => {
   plop.setGenerator('component', {
     description: 'Create a component',
     prompts: [
@@ -26,8 +29,8 @@ module.exports = (plop) => {
       },
       () => {
         if (!fs.existsSync(indexPath)) {
-          const dir = path.dirname(indexPath)
-          fs.mkdirSync(dir, { recursive: true })
+          const directory = path.dirname(indexPath)
+          fs.mkdirSync(directory, { recursive: true })
           fs.writeFileSync(indexPath, '')
         }
       },
@@ -37,15 +40,17 @@ module.exports = (plop) => {
         template: "export * from './{{kebabCase name}}'"
       },
       () => {
-        const content = fs.readFileSync(indexPath, 'utf-8')
+        const content = fs.readFileSync(indexPath, 'utf8')
         const lines = content.split('\n')
         const updatedContent =
           lines
             .filter((line) => line.trim() !== '')
-            .sort()
+            .toSorted()
             .join('\n') + '\n'
         fs.writeFileSync(indexPath, updatedContent)
       }
     ]
   })
 }
+
+export default generator

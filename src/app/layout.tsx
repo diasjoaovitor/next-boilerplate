@@ -1,7 +1,17 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import '@/app/styles/globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+import type { Metadata } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
+
+const geistSans = Geist({
+  variable: '--font-geist-sans',
+  subsets: ['latin']
+})
+
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
+  subsets: ['latin']
+})
 
 export const metadata: Metadata = {
   title: 'Next Boilerplate',
@@ -14,8 +24,12 @@ const RootLayout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <html lang="pt-br" suppressHydrationWarning={true}>
-      <body className={inter.className}>{children}</body>
+    <html
+      lang="pt-br"
+      suppressHydrationWarning={true}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   )
 }
