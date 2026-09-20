@@ -1,9 +1,7 @@
 msg=$(cat "$1")
 
-# Remove Git comments (lines starting with #)
 msg=$(echo "$msg" | grep -v "^#")
 
-# Process emoji replacement
 msg=$(echo "$msg" | sed -e "s/^init/🎉 init/")
 msg=$(echo "$msg" | sed -e "s/^feat/✨ feat/")
 msg=$(echo "$msg" | sed -e "s/^fix/🐛 fix/")
@@ -19,4 +17,4 @@ msg=$(echo "$msg" | sed -e "s/^revert/🗑 revert/")
 
 echo "$msg" > "$1"
 
-pnpm exec commitlint --edit $1
+pnpm commitlint --edit $1
