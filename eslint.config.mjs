@@ -1,6 +1,5 @@
 import json from '@eslint/json'
 import markdown from '@eslint/markdown'
-import vitest from '@vitest/eslint-plugin'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
@@ -16,9 +15,9 @@ const eslintConfig = defineConfig([
   ...nextTs,
   pluginPromise.configs['flat/recommended'],
   prettier,
-  eslintPluginTailwindcss.configs.recommended,
   preferArrowFunctions.configs.all,
   {
+    extends: [eslintPluginTailwindcss.configs.recommended],
     settings: {
       tailwindcss: {
         cssConfigPath: './src/app/styles/globals.css',
@@ -33,12 +32,15 @@ const eslintConfig = defineConfig([
     },
     extends: ['unicorn/recommended'],
     rules: {
-      'unicorn/prevent-abbreviations': [
+      'unicorn/default-export-style': ['error', { functions: 'separate' }],
+      'unicorn/logical-assignment-operators': 'off',
+      'unicorn/no-null': 'off',
+      'unicorn/name-replacements': [
         'error',
         {
           replacements: {
-            utils: false,
-            props: false
+            props: false,
+            utils: false
           }
         }
       ]
@@ -53,10 +55,6 @@ const eslintConfig = defineConfig([
     }
   },
   {
-    files: ['**/*.test.{js,jsx,ts,tsx}'],
-    ...vitest.configs.recommended
-  },
-  {
     files: ['**/*.json'],
     plugins: { json },
     language: 'json/json',
@@ -68,7 +66,13 @@ const eslintConfig = defineConfig([
     language: 'markdown/commonmark',
     extends: ['markdown/recommended']
   },
-  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts'])
+  globalIgnores([
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
+    '.claude/**'
+  ])
 ])
 
 export default eslintConfig
