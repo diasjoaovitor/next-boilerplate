@@ -1,3 +1,1 @@
-export default {
-  extends: ['emoji-convention']
-}
+export default { extends: ['emoji-convention'] }
