@@ -32,6 +32,7 @@ const eslintConfig = defineConfig([
     },
     extends: ['unicorn/recommended'],
     rules: {
+      'unicorn/consistent-boolean-name': 'off',
       'unicorn/default-export-style': ['error', { functions: 'separate' }],
       'unicorn/logical-assignment-operators': 'off',
       'unicorn/no-null': 'off',
@@ -39,6 +40,7 @@ const eslintConfig = defineConfig([
         'error',
         {
           replacements: {
+            params: false,
             props: false,
             utils: false
           }
@@ -63,15 +65,25 @@ const eslintConfig = defineConfig([
   {
     files: ['**/*.md'],
     plugins: { markdown },
-    language: 'markdown/commonmark',
-    extends: ['markdown/recommended']
+    language: 'markdown/gfm',
+    languageOptions: { frontmatter: 'yaml' },
+    extends: ['markdown/recommended'],
+    // These rules crash ESLint on GFM text nodes without a position (e.g. `[text][https://...]`)
+    // instead of reporting: https://github.com/eslint/markdown/issues/619
+    rules: {
+      'markdown/no-invalid-label-refs': 'off',
+      'markdown/no-missing-label-refs': 'off',
+      'markdown/no-reference-like-urls': 'off',
+      'markdown/no-space-in-emphasis': 'off'
+    }
   },
   globalIgnores([
     '.next/**',
     'out/**',
     'build/**',
     'next-env.d.ts',
-    '.claude/**'
+    '.claude/**',
+    'test-results/**'
   ])
 ])
 

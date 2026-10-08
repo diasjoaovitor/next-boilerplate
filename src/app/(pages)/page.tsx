@@ -1,7 +1,8 @@
+import { cn } from 'cn'
 import Image from 'next/image'
 
-import { buttonVariants, Card } from '@/app/components'
-import { cn } from '@/app/lib'
+import { buttonVariants } from '@/app/components/ui/shadcn/button'
+import { Card } from '@/app/components/ui/shadcn/card'
 
 const Home = () => (
   <div className="flex flex-1 flex-col items-center justify-center bg-zinc-50 font-sans dark:bg-black">
