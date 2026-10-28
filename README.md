@@ -39,6 +39,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 The full conventions live in [`AGENTS.md`](./AGENTS.md), and the step-by-step flow from planning to merge is in [`docs/development-workflow.md`](./docs/development-workflow.md); the highlights are below.
 
+### Language
+
+- Everything is written in English, from code and UI copy to commits, issues and docs. A project for users of another language overrides this in its own `AGENTS.md`.
+
 ### Tooling
 
 - **Package manager:** pnpm only. Versions in `dependencies` and `devDependencies` are pinned exact (install with `pnpm add -E <pkg>`).
@@ -52,6 +56,7 @@ The full conventions live in [`AGENTS.md`](./AGENTS.md), and the step-by-step fl
 - Components are grouped by role: `ui/` for visual building blocks (shadcn ones in `ui/shadcn/`), `blocks/` for composed pieces reused across pages (grouped by domain, e.g. `blocks/post/`), `providers/` for context providers and `layouts/` for page shells, whose private parts live in a `_components/` folder next to them.
 - Global styles live in `src/app/styles/globals.css`.
 - Anything that is not frontend-exclusive, such as `src/tests`, sits directly under `src`, as a sibling of `app`.
+- `action.ts` with `'use server'` is only for mutations called from the client; data a Server Component reads comes from a `data.ts`.
 
 ### Styling and UI
 
@@ -75,7 +80,7 @@ The full conventions live in [`AGENTS.md`](./AGENTS.md), and the step-by-step fl
 
 - **Unit tests:** Vitest with `jsdom` and Testing Library. Run `pnpm test` (once) or `pnpm test:watch`. Only `src/**/*.test.{ts,tsx}` files are picked up.
 - **E2E tests:** Playwright (Chromium) in `src/tests/e2e`. Run `pnpm test:e2e` or `pnpm test:e2e:ui`. The dev server starts automatically.
-- Only the logic we wrote is tested, not library or framework behavior.
+- Only the logic we wrote is tested, not library or framework behavior. Assertions wait up to 15s, since `pnpm dev` compiles each route on its first request.
 
 ### Git hooks and CI
 
@@ -92,7 +97,7 @@ The full conventions live in [`AGENTS.md`](./AGENTS.md), and the step-by-step fl
 
 - `AGENTS.md` (imported by `CLAUDE.md`) documents the project conventions for coding agents.
 - `.mcp.json` configures the `context7` (library docs) and `playwright` MCP servers.
-- `.claude/` contains a `new-component` skill for adding shadcn or shared components, a `ui-reviewer` subagent that reviews UI semantics and accessibility, and a `settings.json` that asks for confirmation before every `git commit`.
+- `.claude/` contains a `new-component` skill for adding shadcn or shared components, a `review-copy` skill that reviews naming, comments, test descriptions, UI copy and docs, a `ui-reviewer` subagent that reviews UI semantics and accessibility, and a `settings.json` that asks for confirmation before every `git commit`.
 
 #### Context7 API key
 

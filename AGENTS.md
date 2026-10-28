@@ -14,6 +14,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 This is a general-purpose boilerplate: it takes no stance on database, ORM, auth, data fetching, state management, hosting or any other dependency outside the toolchain and the UI layer. Don't add one as a default; each project picks its own. The one opinion on the UI side is **shadcn/ui** as the component library, with its theme and Tailwind's default palette kept as they come (see Styling & UI).
 
+### Language
+
+- Everything is written in English: code (identifiers and comments), UI copy and metadata, commit messages, branch names, issues, pull requests, `AGENTS.md`, `README.md`, `docs/` and the AI workflow under `.claude/`.
+- A project whose users or team speak another language overrides this section, listing what moves to that language (e.g. UI copy, issues and the issue template) and what stays in English.
+
 ### Package manager
 
 - Use **pnpm** only (not npm/yarn).
@@ -32,7 +37,8 @@ This is a general-purpose boilerplate: it takes no stance on database, ORM, auth
 - Shared frontend code lives in `src/app/components`, React hooks in `src/app/hooks` and other helpers in `src/app/helpers` (create them when the first one is needed). The `lib` alias in `components.json` points to `src/app/lib`, which doesn't exist: if the shadcn CLI ever creates something there, keep it in `lib` or move it to `helpers` case by case.
 - There are no `index.ts` barrels: import each module directly from its file through the `@/` alias (e.g. `@/app/components/ui/shadcn/button`). Barrels cause circular imports, give two import paths for the same module and make Vite/Vitest load every re-exported module.
 - `src/app/components` groups components by role: `ui/` for visual building blocks (shadcn ones under `ui/shadcn/`, our own under `ui/custom/`), `blocks/` for composed pieces reused across pages, grouped by domain (e.g. `blocks/post/`; a block that belongs to no domain stays directly in `blocks/`), `providers/` for context providers without UI of their own and `layouts/` for page shells.
-- A layout lives in its own folder (`layouts/<name>/index.tsx`), with the parts only it uses in a private `_components/` folder next to it. Code outside the layout imports only `layouts/<name>`, never its `_components/`. The same goes for a route: parts used by a single page live in a `_components/` folder next to it.
+- A layout lives in its own folder (`layouts/<name>/index.tsx`), with the parts only it uses in a private `_components/` folder next to it. Code outside the layout imports only `layouts/<name>`, never its `_components/`. The same goes for a route: parts used by a single page live in a `_components/` folder next to it. Parts shared only by the pages of one route group live in the group's own `_components/` (e.g. `(pages)/(auth)/_components/`) and are imported only by pages inside that group. A helper that isn't a component or a form's action sits at the root of the route or group it serves, not in `_components/` nor in `src/app/helpers`, which is for helpers shared across the app.
+- `actions.ts`/`action.ts` with `'use server'` is only for mutations called from the client. A function a Server Component calls to read data is not a Server Action: name its file `data.ts`.
 - `favicon.ico` stays directly in `src/app/`, not nested in a route group.
 - React Compiler is enabled (`reactCompiler: true` in `next.config.ts`, `babel-plugin-react-compiler` devDependency).
 
@@ -42,6 +48,7 @@ This is a general-purpose boilerplate: it takes no stance on database, ORM, auth
 - `eslint-plugin-unicorn@74` declares a peer of `eslint >=10.4`, but the project stays on ESLint 9 (`9.39.5`). The peer is unmet (`pnpm peers check` reports it, and depending on the pnpm version install warns `Issues with peer dependencies found`), but `pnpm eslint:check` passes. Don't bump one without validating the other.
 - `next lint` no longer exists (removed in Next.js 16). Use `pnpm eslint:check` / `pnpm eslint:fix` and `pnpm prettier:check` / `pnpm prettier:fix`.
 - `pnpm type-check` runs `next typegen` first: globals such as `LayoutProps` are generated into `.next/types`, so a clean checkout (CI, fresh clone) fails `tsc --noEmit` without it.
+- The `review-copy` skill (`.claude/skills/review-copy/`) reviews the text in the code (naming, comments, test descriptions, UI copy, docs); use it on a diff before opening a pull request.
 - Prettier style: single quotes, no semicolons, no trailing commas (`.prettierrc`).
 - Base indentation/whitespace rules (2 spaces, LF, trim trailing whitespace, final newline) are enforced editor-side via `.editorconfig`.
 
@@ -60,8 +67,9 @@ This is a general-purpose boilerplate: it takes no stance on database, ORM, auth
 ### Testing
 
 - Unit tests: **Vitest** (`vitest.config.mts`), `jsdom` environment, native Vite `resolve.tsconfigPaths` (no `vite-tsconfig-paths` plugin needed). Only picks up `src/**/*.test.{ts,tsx}`. Component tests use `@testing-library/react` / `@testing-library/dom`. `vitest.setup.ts` (`setupFiles`) runs Testing Library's `cleanup` after every test, so test files don't repeat `afterEach(cleanup)`.
-- E2E tests: **Playwright** (`playwright.config.ts`), tests live in `src/tests/e2e`, single `chromium` project, `webServer` auto-starts `pnpm dev` against `http://localhost:3000`. Failure artifacts go to `test-results/` (git- and ESLint-ignored). There are no global retries: a known flaky test gets `test.describe.configure({ retries })` in its own `describe`, with a comment linking the issue that tracks it.
+- E2E tests: **Playwright** (`playwright.config.ts`), tests live in `src/tests/e2e`, single `chromium` project, `webServer` auto-starts `pnpm dev` against `http://localhost:3000`. Failure artifacts go to `test-results/` (git- and ESLint-ignored). Assertions wait up to 15s (`expect.timeout`), since `pnpm dev` compiles each route on its first request; don't lower it to the default 5s. There are no global retries: a known flaky test gets `test.describe.configure({ retries })` in its own `describe`, with a comment linking the issue that tracks it.
 - Only test logic we wrote (filtering, lookups, mappings, transforms). Don't test library or framework behavior (e.g. a component that only passes props or HTML through, schema defaults, `Link` routing), and drop a test whose main cost is a mock needed only to render. Prefer a unit test; add an e2e test only for what a unit test can't cover.
+- Older issues may ask for tests that break the rule above. Skip them without asking, and list them as dropped in the closing comment.
 - Scripts: `pnpm test` (unit, run once) / `pnpm test:watch` (unit, watch mode) / `pnpm test:e2e` (e2e) / `pnpm test:e2e:ui` (e2e, Playwright UI mode).
 - CI (`.github/workflows/ci.yml`, triggered on `pull_request`) runs, in order: `commitlint` over the PR's commit range, `pnpm type-check`, `pnpm eslint:check`, `pnpm prettier:check`, `pnpm test`, then installs Chromium (`pnpm exec playwright install --with-deps chromium`) and runs `pnpm test:e2e`.
 
